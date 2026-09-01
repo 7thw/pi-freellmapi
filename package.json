@@ -1,0 +1,39 @@
+{
+	"name": "pi-prime-freellmapi",
+	"version": "0.1.0",
+	"type": "module",
+	"description": "Pi and Prime Agent extension for discovering models from a FreeLLMAPI gateway.",
+	"license": "MIT",
+	"engines": {
+		"node": ">=22"
+	},
+	"files": [
+		"index.ts",
+		"src",
+		"README.md",
+		"LICENSE"
+	],
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"format": "biome check --write *.ts *.json src test",
+		"check": "biome check *.ts *.json src test && tsc --noEmit && vitest run"
+	},
+	"pi": {
+		"extensions": [
+			"./index.ts"
+		]
+	},
+	"peerDependencies": {
+		"@earendil-works/pi-ai": "*",
+		"@earendil-works/pi-coding-agent": "*"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "latest",
+		"@earendil-works/pi-ai": "https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev/releases/v0.8.1/prime-agent-ai-0.8.1.tgz",
+		"@earendil-works/pi-coding-agent": "https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev/releases/v0.8.1/prime-agent-0.8.1.tgz",
+		"@types/node": "latest",
+		"typescript": "latest",
+		"vitest": "latest"
+	}
+}
