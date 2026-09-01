@@ -1,4 +1,4 @@
-# pi-prime-freellmapi
+# pi-freellmapi
 
 A shared Pi and Prime Agent extension that discovers available models from a
 running FreeLLMAPI gateway and registers them as the native `freellmapi`
@@ -9,15 +9,17 @@ provider.
 The factory source is:
 
 ```text
-/Users/macdadyo/__HUBGENTIC/__AGENTS/prime-agent/_extensions-factory/pi-prime-freellmapi
+/Users/macdadyo/__HUBGENTIC/__AGENTS/_factory-extensions/_pi/_pi-freellmapi/pi-freellmapi
 ```
 
 Install and validate it from that directory. Deployment targets are separate:
 
-- Pi (phase 2): `~/.pi/extensions/pi-prime-freellmapi`
-  - Current Pi global discovery also checks `~/.pi/agent/extensions`; when
-    needed, link that directory to the deployment path above.
-- Prime Agent (phase 3): `~/.prime/agent/extensions/pi-prime-freellmapi`
+- Pi: install this local Pi package with:
+  `pi install /Users/macdadyo/__HUBGENTIC/__AGENTS/_factory-extensions/_pi/_pi-freellmapi/pi-freellmapi`
+  The package source is recorded in `~/.pi/agent/settings.json`; npm packages
+  managed by Pi are stored under `~/.pi/agent/npm/`.
+- Direct global auto-discovery: `~/.pi/agent/extensions/pi-freellmapi`
+- Prime Agent (phase 3): `~/.prime/agent/extensions/pi-freellmapi`
 
 ## Configuration
 
