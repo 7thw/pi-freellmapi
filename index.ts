@@ -16,7 +16,7 @@ import {
 } from "./src/login.ts";
 import { toProviderConfig } from "./src/provider.ts";
 
-const EXTENSION_SINGLETON_KEY = Symbol.for("pi-prime-freellmapi/loaded");
+const EXTENSION_SINGLETON_KEY = Symbol.for("pi-freellmapi/loaded");
 const STARTUP_TIMEOUT_MS = 2_000;
 const NORMAL_TIMEOUT_MS = 15_000;
 const POLL_INTERVAL_MS = 10 * 60 * 1000;

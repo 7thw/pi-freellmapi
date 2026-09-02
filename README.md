@@ -1,24 +1,33 @@
+# 
+
 # pi-freellmapi
 
-A shared Pi and Prime Agent extension that discovers available models from a
-running FreeLLMAPI gateway and registers them as the native `freellmapi`
-provider.
+A Pi package and Prime Agent extension that discovers models from a
+FreeLLMAPI gateway and registers them as the native `freellmapi` provider.
+
+## Install as a Pi package
+
+```bash
+pi install npm:pi-freellmapi
+```
+
+The package manifest exposes `index.ts` through the `pi.extensions` field.
+The package is intentionally TypeScript-only because Pi loads extensions
+through its normal TypeScript runtime.
 
 ## Factory development
 
 The factory source is:
 
 ```text
-/Users/macdadyo/__HUBGENTIC/__AGENTS/_factory-extensions/_pi/_pi-freellmapi/pi-freellmapi
+/Users/macdadyo/__HUBGENTIC/__AGENTS/prime-agent/_extensions-factory/pi-prime-freellmapi
 ```
 
 Install and validate it from that directory. Deployment targets are separate:
 
-- Pi: install this local Pi package with:
-  `pi install /Users/macdadyo/__HUBGENTIC/__AGENTS/_factory-extensions/_pi/_pi-freellmapi/pi-freellmapi`
-  The package source is recorded in `~/.pi/agent/settings.json`; npm packages
-  managed by Pi are stored under `~/.pi/agent/npm/`.
-- Direct global auto-discovery: `~/.pi/agent/extensions/pi-freellmapi`
+- Pi (phase 2): `~/.pi/extensions/pi-freellmapi`
+    - Current Pi global discovery also checks `~/.pi/agent/extensions`; when
+      needed, link that directory to the deployment path above.
 - Prime Agent (phase 3): `~/.prime/agent/extensions/pi-freellmapi`
 
 ## Configuration
