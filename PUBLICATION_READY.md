@@ -89,9 +89,9 @@ pi-freellmapi/
 ## 🔒 Security Features
 
 ### Credential Management
-- API keys stored in Pi's native `auth.json`
-- No plaintext storage in extension
-- Credentials loaded securely from host system
+- API keys stored in Pi's native `auth.json` (read-only by extension)
+- Base URLs cached locally in `~/.pi/agent/cache/freellmapi-models.json` for persistence
+- Extension never writes credentials to disk, only reads them
 
 ### Network Security
 - HTTPS preferred, HTTP allowed for localhost

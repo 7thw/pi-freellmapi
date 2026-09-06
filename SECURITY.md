@@ -8,7 +8,8 @@ This document outlines the security practices and considerations for `pi-freellm
 
 - **API Keys**: Stored by the host's native OAuth system (Pi's `auth.json`)
 - **Base URLs**: Stored in environment variables or `auth.json`
-- **No Plaintext Storage**: The extension never writes credentials to disk
+- **Cache Storage**: The extension stores model metadata (IDs, names, context windows) in `~/.pi/agent/cache/freellmapi-models.json`
+- **Cache Contents**: Cache includes `apiRoot` (base URL) for cache invalidation but does NOT store API keys or secrets
 
 ### Credential Flow
 
@@ -168,6 +169,8 @@ Before submitting PRs, verify:
 - [ ] Dependencies are from trusted sources
 - [ ] Network requests have timeouts
 - [ ] File operations handle permissions correctly
+- [ ] Cache files don't store API keys or secrets (only model metadata + base URL)
+- [ ] Extension only reads credentials from host storage, never writes them
 
 ## Compliance
 

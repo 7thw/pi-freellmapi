@@ -134,12 +134,14 @@ pi-freellmapi/
 
 1. **Extension Singleton**: Ensures only one instance runs per session
 2. **Polling Mechanism**: Refreshes catalog every 10 minutes with exponential backoff
-3. **Cache System**: Stores models in `~/.pi/agent/cache/freellmapi-models.json`
-4. **Credential Management**: Reads from host's auth.json using Pi's credential system
+3. **Cache System**: Stores model metadata (IDs, names, context windows, base URL) in `~/.pi/agent/cache/freellmapi-models.json`
+4. **Credential Management**: Reads credentials from host's auth.json using Pi's credential system (never writes credentials)
 
 ## Security
 
-- **No Secret Storage**: API keys are stored by the host's native OAuth system
+- **API Key Storage**: API keys are stored by the host's native OAuth system in `auth.json`
+- **URL Caching**: Base URLs are cached in `~/.pi/agent/cache/freellmapi-models.json` (without API keys)
+- **Read-Only Credentials**: Extension only reads credentials from host's secure storage, never writes them
 - **Input Validation**: All URLs and keys are validated and sanitized
 - **Error Handling**: Credentials are never logged or exposed in errors
 - **Timeout Protection**: All network requests have timeouts to prevent hangs
