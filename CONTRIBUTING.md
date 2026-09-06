@@ -141,7 +141,7 @@ import { expect, test, vi } from 'vitest'
 import { normalizeBaseUrl } from '../src/config.ts'
 
 test('normalizeBaseUrl adds /v1 when missing', () => {
-  expect(normalizeBaseUrl('http://localhost:3001')).toBe('http://localhost:3001/v1')
+  expect(normalizeBaseUrl('http://localhost:31415')).toBe('http://localhost:31415/v1')
 })
 ```
 

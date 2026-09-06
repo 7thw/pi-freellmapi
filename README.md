@@ -27,12 +27,24 @@ pi install npm:pi-freellmapi
 npm install pi-freellmapi
 ```
 
+### Local Development
+
+For local development, add to your `~/.pi/settings.json`:
+
+```json
+{
+  "packages": [
+    "../../path/to/pi-freellmapi"
+  ]
+}
+```
+
 ## Configuration
 
 Set environment variables before starting Pi:
 
 ```bash
-export FREELLMAPI_BASE_URL=http://127.0.0.1:3001/v1
+export FREELLMAPI_BASE_URL=http://127.0.0.1:31415/v1
 export FREELLMAPI_API_KEY=<your-unified-api-key>
 export FREELLMAPI_MAX_TOKENS=8192
 ```
@@ -41,11 +53,11 @@ export FREELLMAPI_MAX_TOKENS=8192
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `FREELLMAPI_BASE_URL` | FreeLLMAPI gateway base URL | `http://127.0.0.1:3001/v1` |
+| `FREELLMAPI_BASE_URL` | FreeLLMAPI gateway base URL | `http://127.0.0.1:31415/v1` |
 | `FREELLMAPI_API_KEY` | Unified API key for authentication | Required for model discovery |
 | `FREELLMAPI_MAX_TOKENS` | Maximum tokens for model responses | `8192` |
 
-**Note**: The base URL automatically appends `/v1` if missing. Any port is supported, including custom ports like `31415`.
+**Note**: The base URL automatically appends `/v1` if missing. The default assumes FreeLLMAPI runs on port `31415`, but any valid host and port are supported (e.g., `http://localhost:3000/v1`).
 
 ## Usage
 
@@ -70,7 +82,7 @@ import { createLoginFreeLlmApi, getFreeLlmApiKey } from 'pi-freellmapi';
 import { fetchCatalog } from 'pi-freellmapi/catalog';
 
 // Fetch catalog directly
-const models = await fetchCatalog('http://localhost:3001/v1', 'your-api-key');
+const models = await fetchCatalog('http://127.0.0.1:31415/v1', 'your-api-key');
 
 // Create login handler
 const loginHandler = createLoginFreeLlmApi(async (baseUrl, apiKey, models) => {

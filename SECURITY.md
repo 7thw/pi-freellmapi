@@ -38,7 +38,7 @@ This document outlines the security practices and considerations for `pi-freellm
 ### HTTPS Enforcement
 
 - Extensions should prefer HTTPS URLs
-- HTTP is allowed for local development (e.g., `http://127.0.0.1:3001`)
+- HTTP is allowed for local development (e.g., `http://127.0.0.1:31415`)
 - URL validation prevents injection attacks
 
 ### Timeout Protection
