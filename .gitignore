@@ -6,3 +6,7 @@ __pycache__/
 .env
 .env.local
 .zed/
+test/
+coverage/
+*.test.ts
+*.spec.ts

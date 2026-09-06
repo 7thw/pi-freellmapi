@@ -2,8 +2,35 @@
 	"name": "pi-freellmapi",
 	"version": "0.1.0",
 	"type": "module",
-	"description": "Pi and Prime Agent extension for discovering models from a FreeLLMAPI gateway.",
+	"description": "Pi extension for discovering models from a FreeLLMAPI gateway",
+	"main": "./index.ts",
+	"module": "./index.ts",
+	"types": "./index.ts",
+	"exports": {
+		".": {
+			"import": "./index.ts",
+			"types": "./index.ts"
+		}
+	},
 	"license": "MIT",
+	"author": "7thw",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/7thw/pi-freellmapi.git"
+	},
+	"bugs": {
+		"url": "https://github.com/7thw/pi-freellmapi/issues"
+	},
+	"homepage": "https://github.com/7thw/pi-freellmapi#readme",
+	"keywords": [
+		"pi-package",
+		"pi-extension",
+		"freellmapi",
+		"openai-compatible",
+		"llm",
+		"ai",
+		"model-provider"
+	],
 	"engines": {
 		"node": ">=22"
 	},
@@ -35,11 +62,5 @@
 		"@types/node": "latest",
 		"typescript": "latest",
 		"vitest": "latest"
-	},
-	"keywords": [
-		"pi-package",
-		"pi-extension",
-		"freellmapi",
-		"openai-compatible"
-	]
+	}
 }
