@@ -1,6 +1,6 @@
 {
 	"name": "pi-freellmapi",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"type": "module",
 	"description": "Pi extension for discovering models from a FreeLLMAPI gateway",
 	"main": "./dist/index.js",
