@@ -2,8 +2,8 @@ import type {
 	OAuthCredentials,
 	OAuthLoginCallbacks,
 } from "@earendil-works/pi-ai";
-import { type FreeLlmApiModel, fetchCatalog } from "./catalog.ts";
-import { normalizeBaseUrl } from "./config.ts";
+import { type FreeLlmApiModel, fetchCatalog } from "./catalog.js";
+import { normalizeBaseUrl } from "./config.js";
 
 export type RegisterLoginCatalog = (
 	baseUrl: string,

@@ -10,3 +10,4 @@ test/
 coverage/
 *.test.ts
 *.spec.ts
+dist/

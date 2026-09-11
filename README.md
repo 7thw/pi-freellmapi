@@ -8,14 +8,14 @@ A Pi package extension that discovers models from a FreeLLMAPI gateway and regis
 ## Features
 
 - **Automatic Model Discovery**: Fetches available models from FreeLLMAPI gateway
-- **Live Catalog Refresh**: Periodically updates model catalog (10-minute intervals)
+- **Live Catalog Refresh**: Updates model catalog every 10 minutes
 - **Cached Models**: Stores discovered models locally for offline use
-- **OAuth Integration**: Supports native Pi login flow
-- **TypeScript Support**: Full type safety with strict mode
+- **OAuth Integration**: Uses Pi's native login flow
+- **TypeScript Support**: Full type safety
 
 ## Installation
 
-### As a Pi Package
+### As a Pi Package (Recommended)
 
 ```bash
 pi install npm:pi-freellmapi
@@ -29,7 +29,7 @@ npm install pi-freellmapi
 
 ### Local Development
 
-For local development, add to your `~/.pi/settings.json`:
+Add to your `~/.pi/settings.json`:
 
 ```json
 {
@@ -41,37 +41,44 @@ For local development, add to your `~/.pi/settings.json`:
 
 ## Configuration
 
-Set environment variables before starting Pi:
+**Recommended**: Let Pi handle credentials securely via `pi /login` → FreeLLMAPI
 
+Only override if needed:
 ```bash
-export FREELLMAPI_BASE_URL=http://127.0.0.1:31415/v1
-export FREELLMAPI_API_KEY=<your-unified-api-key>
-export FREELLMAPI_MAX_TOKENS=8192
+export FREELLMAPI_BASE_URL=http://127.0.0.1:31415/v1   # Optional
+export FREELLMAPI_MAX_TOKENS=8192                      # Optional
 ```
 
-### Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `FREELLMAPI_BASE_URL` | FreeLLMAPI gateway base URL | `http://127.0.0.1:31415/v1` |
-| `FREELLMAPI_API_KEY` | Unified API key for authentication | Required for model discovery |
-| `FREELLMAPI_MAX_TOKENS` | Maximum tokens for model responses | `8192` |
-
-**Note**: The base URL automatically appends `/v1` if missing. The default assumes FreeLLMAPI runs on port `31415`, but any valid host and port are supported (e.g., `http://localhost:3000/v1`).
+**Alternative** (less secure - avoids Pi's credential system):
+```bash
+export FREELLMAPI_BASE_URL=http://127.0.0.1:31415/v1
+export FREELLMAPI_API_KEY=<your-api-key>               # ⚠️ Less secure
+export FREELLMAPI_MAX_TOKENS=8192
+```
 
 ## Usage
 
 ### Native Login Flow
 
-Use Pi's built-in login command:
-
 ```bash
-pi /login -> FreeLLMAPI
-pi /model -> freellmapi/auto
+pi
+---
+
+[/login]
+[ Select authentication method:  ]
+[ Sign in with an API key ]
+[  Select provider to configure:
+
+>
+ → FreeLLM API • unconfigured
+]
+[ enter baseUrl ]
+[ enter API KEY ]
+
 ```
 
 The extension will:
-1. Prompt for base URL and API key
+1. Prompt for base URL and API key (stored securely by Pi)
 2. Fetch the live model catalog
 3. Register discovered models as the `freellmapi` provider
 
@@ -90,61 +97,22 @@ const loginHandler = createLoginFreeLlmApi(async (baseUrl, apiKey, models) => {
 });
 ```
 
-## Provider Registration
+## How It Works
 
-The extension registers a provider with ID `freellmapi` that:
-
-- Uses the `openai-completions` API format
-- Supports OAuth-style authentication
-- Automatically refreshes the model catalog
-- Caches models locally for resilience
-
-### Discovered Models
-
-Models are fetched from `GET <base-url>/models` with bearer authentication. The extension:
-
-- Shows available models with valid context windows
-- Includes special models: `auto`, `fusion`, and named profiles (`auto:<profile-name>`)
-- Filters out disabled, malformed, duplicate, and context-less entries
-- Uses native OpenAI-compatible implementation
-
-## Architecture
-
-### Files
-
-```
-pi-freellmapi/
-├── index.ts           # Extension entry point
-├── src/
-│   ├── auth.ts        # Credential loading from auth.json
-│   ├── cache.ts       # Model catalog caching
-│   ├── catalog.ts     # Model discovery and parsing
-│   ├── config.ts      # Configuration handling
-│   ├── login.ts       # OAuth login flow
-│   └── provider.ts    # Provider configuration
-└── test/
-    ├── catalog.test.ts
-    ├── config.test.ts
-    ├── provider.test.ts
-    ├── cache.test.ts
-    └── auth.test.ts
-```
-
-### Key Components
-
-1. **Extension Singleton**: Ensures only one instance runs per session
-2. **Polling Mechanism**: Refreshes catalog every 10 minutes with exponential backoff
-3. **Cache System**: Stores model metadata (IDs, names, context windows, base URL) in `~/.pi/agent/cache/freellmapi-models.json`
-4. **Credential Management**: Reads credentials from host's auth.json using Pi's credential system (never writes credentials)
+- **Extension Entry Point**: `index.ts`
+- **Source Code**: `src/` directory (auth, cache, catalog, config, login, provider)
+- **Credentials**: Read from Pi's secure storage (`~/.pi/agent/auth.json`)
+- **Cache**: Model metadata stored in `~/.pi/agent/cache/freellmapi-models.json`
+- **Models**: Fetched from `GET <base-url>/models` with bearer auth
 
 ## Security
 
-- **API Key Storage**: API keys are stored by the host's native OAuth system in `auth.json`
-- **URL Caching**: Base URLs are cached in `~/.pi/agent/cache/freellmapi-models.json` (without API keys)
-- **Read-Only Credentials**: Extension only reads credentials from host's secure storage, never writes them
-- **Input Validation**: All URLs and keys are validated and sanitized
-- **Error Handling**: Credentials are never logged or exposed in errors
-- **Timeout Protection**: All network requests have timeouts to prevent hangs
+- ✅ API keys stored by Pi's native OAuth system (read-only)
+- ✅ Extension never writes credentials, only reads them
+- ✅ Cache contains no secrets (only model IDs, names, context windows)
+- ✅ All network requests have timeouts
+- ✅ Input validation and sanitization
+- ✅ Error messages never expose credentials
 
 ## Testing
 
@@ -152,14 +120,14 @@ pi-freellmapi/
 # Run all tests
 npm test
 
-# Run with coverage
-npm run test:coverage
-
 # Type check
 npm run typecheck
 
 # Format check
 npm run format
+
+# Full check
+npm run check
 ```
 
 ## Development
@@ -169,37 +137,35 @@ npm run format
 - Node.js >= 22
 - npm >= 9
 
-### Local Development
+### Commands
 
 ```bash
-# Clone and install
-git clone https://github.com/7thw/pi-freellmapi.git
-cd pi-freellmapi
+# Install
 npm install
 
-# Run tests
+# Test
 npm test
 
 # Type check
 npm run typecheck
 
-# Format code
+# Format
 npm run format
+
+# Check (test + typecheck + format)
+npm run check
 ```
 
-### Publishing to npm
+## Publishing
 
 ```bash
-# Login to npm
 npm login
-
-# Publish
 npm publish --access public
 ```
 
 ## Compatibility
 
-- **Pi Version**: Requires Pi >= 0.8.1
+- **Pi Version**: Requires Pi >= 0.85.1
 - **Node.js**: >= 22
 - **API Format**: OpenAI Completions API compatible
 
@@ -218,14 +184,9 @@ npm publish --access public
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+MIT - see [LICENSE](LICENSE)
 
-## Support
+## Documentation
 
-- **Issues**: [GitHub Issues](https://github.com/7thw/pi-freellmapi/issues)
+- **Documentation**: [FreellmAPI Documentation](https://github.com/tashfeenahmed/freellmapi)
 - **Documentation**: [Pi Documentation](https://github.com/earendil-works/pi)
-- **FreeLLMAPI**: [FreeLLMAPI GitHub](https://github.com/your-freellmapi-repo)
-
-## Contributing
-
-Contributions are welcome! Please read our contributing guidelines and submit pull requests.

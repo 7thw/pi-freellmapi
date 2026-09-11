@@ -1,7 +1,7 @@
 import {
-	loadStoredCredential,
 	type StoredFreeLlmApiCredential,
-} from "./auth.ts";
+	loadStoredCredential,
+} from "./auth.js";
 
 export const PROVIDER_ID = "freellmapi";
 export const DEFAULT_BASE_URL = "http://127.0.0.1:31415/v1";

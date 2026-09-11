@@ -1,20 +1,20 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { loadStoredCredential, PROVIDER_ID } from "./src/auth.ts";
-import { readCatalogCache, writeCatalogCache } from "./src/cache.ts";
-import { type FreeLlmApiModel, fetchCatalog } from "./src/catalog.ts";
+import { PROVIDER_ID, loadStoredCredential } from "./src/auth.js";
+import { readCatalogCache, writeCatalogCache } from "./src/cache.js";
+import { type FreeLlmApiModel, fetchCatalog } from "./src/catalog.js";
 import {
 	DEFAULT_BASE_URL,
 	type FreeLlmApiConfig,
 	loadConfig,
 	parseMaxTokens,
 	resolveConfiguredApiKey,
-} from "./src/config.ts";
+} from "./src/config.js";
 import {
 	createLoginFreeLlmApi,
 	getFreeLlmApiKey,
 	refreshFreeLlmApiToken,
-} from "./src/login.ts";
-import { toProviderConfig } from "./src/provider.ts";
+} from "./src/login.js";
+import { toProviderConfig } from "./src/provider.js";
 
 const EXTENSION_SINGLETON_KEY = Symbol.for("pi-freellmapi/loaded");
 const STARTUP_TIMEOUT_MS = 2_000;

@@ -3,13 +3,13 @@
 	"version": "0.1.0",
 	"type": "module",
 	"description": "Pi extension for discovering models from a FreeLLMAPI gateway",
-	"main": "./index.ts",
-	"module": "./index.ts",
-	"types": "./index.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"import": "./index.ts",
-			"types": "./index.ts"
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
 		}
 	},
 	"license": "MIT",
@@ -34,33 +34,35 @@
 	"engines": {
 		"node": ">=22"
 	},
-	"files": [
-		"index.ts",
-		"src",
-		"README.md",
-		"LICENSE"
-	],
+	"files": ["dist", "README.md", "LICENSE", "CONTRIBUTING.md"],
+	"bin": {
+		"pi-freellmapi": "./dist/bin/pi-freellmapi.js"
+	},
 	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
-		"format": "biome check --write *.ts *.json src test",
-		"check": "biome check *.ts *.json src test && tsc --noEmit && vitest run"
+		"format": "biome check --write *.ts *.json src test bin",
+		"check": "biome check *.ts *.json src test bin && tsc --noEmit && vitest run",
+		"cli": "tsx bin/pi-freellmapi.ts",
+		"cli:check": "tsx bin/pi-freellmapi.ts --help",
+		"prepare": "npm run build"
 	},
 	"pi": {
-		"extensions": [
-			"./index.ts"
-		]
+		"extensions": ["./dist/index.js"]
 	},
 	"peerDependencies": {
-		"@earendil-works/pi-ai": "*",
-		"@earendil-works/pi-coding-agent": "*"
+		"@earendil-works/pi-ai": "^0.85.1",
+		"@earendil-works/pi-coding-agent": "^0.85.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "latest",
-		"@earendil-works/pi-ai": "https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev/releases/v0.8.1/prime-agent-ai-0.8.1.tgz",
-		"@earendil-works/pi-coding-agent": "https://pub-728493de92a943e2a9b2d17b4719f318.r2.dev/releases/v0.8.1/prime-agent-0.8.1.tgz",
-		"@types/node": "latest",
-		"typescript": "latest",
-		"vitest": "latest"
+		"@biomejs/biome": "^1.9.4",
+		"@earendil-works/pi-ai": "^0.85.1",
+		"@earendil-works/pi-coding-agent": "^0.85.1",
+		"@types/node": "^22.10.5",
+		"tsx": "^4.19.2",
+		"typescript": "^5.9.3",
+		"vite": "^5.4.21",
+		"vitest": "^2.1.9"
 	}
 }

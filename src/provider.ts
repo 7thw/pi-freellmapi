@@ -2,8 +2,8 @@ import type {
 	ProviderConfig,
 	ProviderModelConfig,
 } from "@earendil-works/pi-coding-agent";
-import type { FreeLlmApiModel } from "./catalog.ts";
-import type { FreeLlmApiConfig } from "./config.ts";
+import type { FreeLlmApiModel } from "./catalog.js";
+import type { FreeLlmApiConfig } from "./config.js";
 
 export function toProviderConfig(
 	config: FreeLlmApiConfig,
