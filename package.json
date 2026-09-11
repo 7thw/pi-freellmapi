@@ -34,7 +34,7 @@
 	"engines": {
 		"node": ">=22"
 	},
-	"files": ["dist", "README.md", "LICENSE", "CONTRIBUTING.md"],
+	"files": ["dist", "README.md", "LICENSE"],
 	"bin": {
 		"pi-freellmapi": "./dist/bin/pi-freellmapi.js"
 	},
