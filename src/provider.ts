@@ -21,7 +21,7 @@ export function toProviderConfig(
 		...(environmentApiKey
 			? {
 					authHeader: false,
-					headers: { Authorization: `Bearer ${environmentApiKey}` },
+					headers: { Authorization: "******" },
 				}
 			: { authHeader: true }),
 		models: models

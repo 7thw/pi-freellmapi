@@ -62,25 +62,16 @@ export FREELLMAPI_MAX_TOKENS=8192
 
 ```bash
 pi
----
-
+--
 [/login]
 [ Select authentication method:  ]
-[ Sign in with an API key ]
-[  Select provider to configure:
-
->
- → FreeLLM API • unconfigured
-]
-[ enter baseUrl ]
-[ enter API KEY ]
+[ Signin with an API key ]
+[ Select provider to configure:
+> → FreeLLM API • unconfigured]
+[ enter BASE_URL ]
+[ enter API_KEY ]
 
 ```
-
-The extension will:
-1. Prompt for base URL and API key (stored securely by Pi)
-2. Fetch the live model catalog
-3. Register discovered models as the `freellmapi` provider
 
 ### Programmatic Usage
 
@@ -142,9 +133,6 @@ npm run check
 ```bash
 # Install
 npm install
-
-# Test
-npm test
 
 # Type check
 npm run typecheck

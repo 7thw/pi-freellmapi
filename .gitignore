@@ -11,3 +11,7 @@ coverage/
 *.test.ts
 *.spec.ts
 dist/
+docs/
+.zed/
+.vscode/
+.git/

@@ -30,10 +30,11 @@ export function createLoginFreeLlmApi(
 		const baseUrl = normalizeBaseUrl(enteredBaseUrl);
 		const apiKey = (
 			await callbacks.onPrompt({
-				message: "FreeLLMAPI unified API key",
+				message:
+					"FreeLLMAPI unified API key (leave empty for a keyless server)",
+				allowEmpty: true,
 			})
 		).trim();
-		if (!apiKey) throw new Error("FreeLLMAPI API key is required");
 
 		callbacks.onProgress?.("Fetching FreeLLMAPI model catalog...");
 		let models: FreeLlmApiModel[];
