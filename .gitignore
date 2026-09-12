@@ -7,4 +7,6 @@ __pycache__/
 .env.local
 .zed/
 .vscode/
+.agents/
 docs/
+.git/
