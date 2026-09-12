@@ -1,5 +1,9 @@
 # pi-freellmapi
 
+[![npm version](https://img.shields.io/npm/v/pi-freellmapi.svg)](https://www.npmjs.com/package/pi-freellmapi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub](https://img.shields.io/badge/GitHub-7thw%2Fpi-freellmapi-blue.svg)](https://github.com/7thw/pi-freellmapi)
+
 A Pi package and that discovers models from FreeLLMAPI
 and registers them as the native `freellmapi` provider.
 
