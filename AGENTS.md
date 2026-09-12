@@ -23,17 +23,29 @@ src/
   auth.ts           # Auth helpers
   cache.ts          # Model catalog caching
   catalog.ts        # Model discovery / catalog
+test/
+  config.test.ts    # normalizeBaseUrl, parseMaxTokens, loadConfig, resolveConfiguredApiKey
+  catalog.test.ts   # parseCatalogResponse, fetchCatalog (with mocked fetch)
+  cache.test.ts     # readCatalogCache, writeCatalogCache (with temp dirs)
+  auth.test.ts      # loadStoredCredential (with temp auth files)
+  provider.test.ts  # toProviderConfig, toProviderModels
+  login.test.ts     # createLoginFreeLlmApi, getFreeLlmApiKey, refreshFreeLlmApiToken
 docs/               # Documentation (git-ignored)
 ```
+
+> All test model IDs use FreeLLMAPI router identifiers (`auto`, `auto:chain`, `fusion`) — see [docs/freellmapi-router-models.md](docs/freellmapi-router-models.md). Never use specific provider model names like `gpt-4` in tests.
 
 ## Available scripts
 
 | Script        | Command                              | What it does                              |
 | ------------- | ------------------------------------ | ----------------------------------------- |
 | `typecheck`   | `tsc --noEmit`                       | Type-checks `index.ts` + `src/**/*.ts`    |
-| `test`        | `vitest run`                         | Runs the test suite                       |
+| `test`        | `vitest run`                         | Runs 6 test files / 77 tests               |
+| `test:watch`  | `vitest`                             | Watch mode for TDD                         |
 | `format`      | `biome check --write *.ts *.json src test` | Formats + lints with Biome        |
 | `check`       | `biome check ... && tsc --noEmit && vitest run` | Full gate: format + typecheck + tests |
+| `audit`       | `npm audit`                          | Security audit (npm CLI built-in)          |
+| `release`     | `npm publish --access public`        | Publish to npm                            |
 
 ## Path aliases
 
@@ -78,6 +90,7 @@ Never publish from memory alone.
 
 **1. Lint & build**
 - [ ] `npm run check` — Biome format/lint + `tsc --noEmit` + `vitest run` all green
+- [ ] `npm run audit` is clean — runs against `dependencies`, `devDependencies`, `bundledDependencies`, `optionalDependencies` (**not** `peerDependencies`; see [npm audit](docs/npmjs-security-dependencies.md))
 - [ ] Did you bump the package version? (`npm version patch|minor|major` — semver `x.x.x`, per [npm creating package.json](docs/npmjs-creating-pck.md))
 - [ ] `npm run typecheck` passes (TS target ES2022 / NodeNext, Node >= 22)
 

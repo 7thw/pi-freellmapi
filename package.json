@@ -22,8 +22,11 @@
 	"scripts": {
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
+		"test:watch": "vitest",
 		"format": "biome check --write *.ts *.json src test",
-		"check": "biome check *.ts *.json src test && tsc --noEmit && vitest run"
+		"check": "biome check *.ts *.json src test && tsc --noEmit && vitest run",
+		"audit": "npm audit",
+		"release": "npm publish --access public"
 	},
 	"pi": {
 		"extensions": [
@@ -41,5 +44,10 @@
 		"@types/node": "latest",
 		"typescript": "latest",
 		"vitest": "latest"
+	},
+	"allowScripts": {
+		"@google/genai@1.52.0": true,
+		"fsevents@2.3.3": true,
+		"protobufjs@7.6.6": true
 	}
 }
