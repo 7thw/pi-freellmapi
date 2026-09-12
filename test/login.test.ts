@@ -47,7 +47,7 @@ describe("createLoginFreeLlmApi", () => {
 		let callCount = 0;
 		callbacks.onPrompt = vi.fn(async () => {
 			callCount++;
-			return callCount === 1 ? "http://example.com/v1" : "   ";
+			return callCount === 1 ? "http://127.0.0.1:31415/v1" : "   ";
 		});
 		await expect(login(callbacks)).rejects.toThrow(
 			"FreeLLMAPI API key is required",
@@ -82,10 +82,10 @@ describe("createLoginFreeLlmApi", () => {
 		let callCount = 0;
 		callbacks.onPrompt = vi.fn(async () => {
 			callCount++;
-			return callCount === 1 ? "http://example.com/v1" : "key";
+			return callCount === 1 ? "http://127.0.0.1:31415/v1" : "key";
 		});
 		await expect(login(callbacks)).rejects.toThrow(
-			"Could not reach FreeLLMAPI at http://example.com/v1: network error",
+			"Could not reach FreeLLMAPI at http://127.0.0.1:31415/v1: network error",
 		);
 		expect(register).not.toHaveBeenCalled();
 	});
@@ -97,10 +97,10 @@ describe("createLoginFreeLlmApi", () => {
 		let callCount = 0;
 		callbacks.onPrompt = vi.fn(async () => {
 			callCount++;
-			return callCount === 1 ? "http://example.com/v1" : "key";
+			return callCount === 1 ? "http://127.0.0.1:31415/v1" : "key";
 		});
 		await expect(login(callbacks)).rejects.toThrow(
-			"Could not reach FreeLLMAPI at http://example.com/v1: no available models with valid context windows",
+			"Could not reach FreeLLMAPI at http://127.0.0.1:31415/v1: no available models with valid context windows",
 		);
 		expect(register).not.toHaveBeenCalled();
 	});
@@ -114,13 +114,13 @@ describe("createLoginFreeLlmApi", () => {
 		let callCount = 0;
 		callbacks.onPrompt = vi.fn(async () => {
 			callCount++;
-			return callCount === 1 ? "http://example.com/v1" : "my-api-key";
+			return callCount === 1 ? "http://127.0.0.1:31415/v1" : "my-api-key";
 		});
 
 		const credentials = await login(callbacks);
 
 		expect(register).toHaveBeenCalledWith(
-			"http://example.com/v1",
+			"http://127.0.0.1:31415/v1",
 			"my-api-key",
 			sampleModels,
 		);
@@ -131,7 +131,7 @@ describe("createLoginFreeLlmApi", () => {
 			access: "my-api-key",
 			refresh: "",
 			expires: Number.POSITIVE_INFINITY,
-			baseUrl: "http://example.com/v1",
+			baseUrl: "http://127.0.0.1:31415/v1",
 		});
 	});
 
@@ -150,7 +150,7 @@ describe("createLoginFreeLlmApi", () => {
 		await login(callbacks);
 
 		expect(register).toHaveBeenCalledWith(
-			"http://example.com/v1",
+			"http://127.0.0.1:31415/v1",
 			"key",
 			sampleModels,
 		);

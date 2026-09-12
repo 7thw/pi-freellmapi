@@ -155,7 +155,7 @@ describe("fetchCatalog", () => {
 			fetchFn,
 		});
 
-		expect(fetchFn).toHaveBeenCalledWith("http://example.com/v1/models", {
+		expect(fetchFn).toHaveBeenCalledWith("http://127.0.0.1:31415/v1/models", {
 			method: "GET",
 			headers: { Authorization: "Bearer key" },
 			signal: expect.any(AbortSignal),
@@ -174,7 +174,7 @@ describe("fetchCatalog", () => {
 		await expect(
 			fetchCatalog("http://example.com", "key", { fetchFn }),
 		).rejects.toThrow(
-			"GET http://example.com/v1/models failed: 500 Internal Server Error",
+			"GET http://127.0.0.1:31415/v1/models failed: 500 Internal Server Error",
 		);
 	});
 
@@ -185,7 +185,7 @@ describe("fetchCatalog", () => {
 
 		await expect(
 			fetchCatalog("http://example.com", "key", { fetchFn }),
-		).rejects.toThrow("GET http://example.com/v1/models failed: network down");
+		).rejects.toThrow("GET http://127.0.0.1:31415/v1/models failed: network down");
 	});
 
 	it("throws when the response is invalid JSON", async () => {
@@ -201,7 +201,7 @@ describe("fetchCatalog", () => {
 		await expect(
 			fetchCatalog("http://example.com", "key", { fetchFn }),
 		).rejects.toThrow(
-			"GET http://example.com/v1/models returned invalid JSON: invalid json",
+			"GET http://127.0.0.1:31415/v1/models returned invalid JSON: invalid json",
 		);
 	});
 

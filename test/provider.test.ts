@@ -3,7 +3,7 @@ import type { FreeLlmApiConfig, FreeLlmApiModel } from "../src/catalog.ts";
 import { toProviderConfig, toProviderModels } from "../src/provider.ts";
 
 const config: FreeLlmApiConfig = {
-	apiRoot: "http://example.com/v1",
+	apiRoot: "http://127.0.0.1:31415/v1",
 	maxTokens: 8192,
 };
 
@@ -88,7 +88,7 @@ describe("toProviderConfig", () => {
 		try {
 			const result = toProviderConfig(config, models);
 			expect(result.name).toBe("FreeLLMAPI");
-			expect(result.baseUrl).toBe("http://example.com/v1");
+			expect(result.baseUrl).toBe("http://127.0.0.1:31415/v1");
 			expect(result.api).toBe("openai-completions");
 			expect(result.apiKey).toBe("$FREELLMAPI_API_KEY");
 			expect(result.authHeader).toBe(true);

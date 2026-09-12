@@ -25,7 +25,7 @@ export function createLoginFreeLlmApi(
 	): Promise<OAuthCredentials> {
 		const enteredBaseUrl = await callbacks.onPrompt({
 			message: "FreeLLMAPI base URL",
-			placeholder: "http://127.0.0.1:3001/v1",
+			placeholder: "http://127.0.0.1:31415/v1",
 		});
 		const baseUrl = normalizeBaseUrl(enteredBaseUrl);
 		const apiKey = (

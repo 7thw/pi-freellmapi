@@ -1,4 +1,6 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { PROVIDER_KEY } from "./src/auth-storage.ts";
+import { loadDotenvFromExtensionDir } from "./src/dotenv.ts";
 import { loadStoredCredential, PROVIDER_ID } from "./src/auth.ts";
 import { readCatalogCache, writeCatalogCache } from "./src/cache.ts";
 import { type FreeLlmApiModel, fetchCatalog } from "./src/catalog.ts";
@@ -24,11 +26,11 @@ const BACKOFF_BASE_MS = 2_000;
 const BACKOFF_MAX_MS = 60_000;
 
 interface State {
-	config: FreeLlmApiConfig;
+	config: FreeLlmApiConfig | undefined;
 	catalog: FreeLlmApiModel[];
 	registered: boolean;
 	stopped: boolean;
-	lastError?: string;
+	lastError?: string | undefined;
 	timer?: ReturnType<typeof setTimeout>;
 	wake?: () => void;
 	refreshController?: AbortController;
@@ -121,6 +123,10 @@ function registerCachedOrLoginOnly(
 	stored: ReturnType<typeof loadStoredCredential>,
 ): void {
 	const config = state.config;
+	if (!config) {
+		registerLoginOnly(pi, state);
+		return;
+	}
 	const apiKey = resolveConfiguredApiKey(process.env, stored);
 	const cached = apiKey ? readCatalogCache(config.apiRoot) : undefined;
 	if (cached && cached.length > 0) {

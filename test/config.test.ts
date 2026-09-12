@@ -84,12 +84,12 @@ describe("loadConfig", () => {
 	it("prefers environment variables over stored credentials", () => {
 		const config = loadConfig(
 			{
-				[BASE_URL_ENV_VAR]: "http://example.com/v1",
+				[BASE_URL_ENV_VAR]: "http://127.0.0.1:31415/v1",
 				[MAX_TOKENS_ENV_VAR]: "1024",
 			},
 			{ baseUrl: "http://stored.example.com/v1" },
 		);
-		expect(config.apiRoot).toBe("http://example.com/v1");
+		expect(config.apiRoot).toBe("http://127.0.0.1:31415/v1");
 		expect(config.maxTokens).toBe(1024);
 	});
 
@@ -119,7 +119,7 @@ describe("resolveConfiguredApiKey", () => {
 		expect(
 			resolveConfiguredApiKey(
 				{},
-				{ baseUrl: "http://example.com/v1", apiKey: "stored-key" },
+				{ baseUrl: "http://127.0.0.1:31415/v1", apiKey: "stored-key" },
 			),
 		).toBe("stored-key");
 	});
@@ -127,7 +127,7 @@ describe("resolveConfiguredApiKey", () => {
 	it("returns undefined when a base URL env var is set but no key", () => {
 		expect(
 			resolveConfiguredApiKey(
-				{ [BASE_URL_ENV_VAR]: "http://example.com/v1" },
+				{ [BASE_URL_ENV_VAR]: "http://127.0.0.1:31415/v1" },
 				undefined,
 			),
 		).toBeUndefined();

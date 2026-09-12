@@ -26,13 +26,13 @@ describe("writeCatalogCache", () => {
 	it("writes a cache file with the apiRoot and models", () => {
 		const dir = mkdtempSync(join(tmpdir(), "freellmapi-cache-test-"));
 		try {
-			writeCatalogCache("http://example.com/v1", sampleModels, dir);
+			writeCatalogCache("http://127.0.0.1:31415/v1", sampleModels, dir);
 			const raw = readFileSync(
 				join(dir, "cache", "freellmapi-models.json"),
 				"utf8",
 			);
 			const data = JSON.parse(raw);
-			expect(data.apiRoot).toBe("http://example.com/v1");
+			expect(data.apiRoot).toBe("http://127.0.0.1:31415/v1");
 			expect(data.models).toEqual(sampleModels);
 			expect(typeof data.savedAt).toBe("number");
 		} finally {
@@ -44,7 +44,7 @@ describe("writeCatalogCache", () => {
 		const dir = mkdtempSync(join(tmpdir(), "freellmapi-cache-test-"));
 		try {
 			writeCatalogCache(
-				"http://example.com/v1",
+				"http://127.0.0.1:31415/v1",
 				sampleModels,
 				join(dir, "nested", "dir"),
 			);
@@ -62,7 +62,7 @@ describe("writeCatalogCache", () => {
 	it("swallows errors when writing fails", () => {
 		expect(() =>
 			writeCatalogCache(
-				"http://example.com/v1",
+				"http://127.0.0.1:31415/v1",
 				sampleModels,
 				"/nonexistent-root/that/cannot/be/created",
 			),
@@ -74,7 +74,7 @@ describe("readCatalogCache", () => {
 	it("returns undefined when the cache file does not exist", () => {
 		const dir = mkdtempSync(join(tmpdir(), "freellmapi-cache-test-"));
 		try {
-			expect(readCatalogCache("http://example.com/v1", dir)).toBeUndefined();
+			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}
@@ -83,7 +83,7 @@ describe("readCatalogCache", () => {
 	it("returns undefined when the apiRoot does not match", () => {
 		const dir = mkdtempSync(join(tmpdir(), "freellmapi-cache-test-"));
 		try {
-			writeCatalogCache("http://example.com/v1", sampleModels, dir);
+			writeCatalogCache("http://127.0.0.1:31415/v1", sampleModels, dir);
 			expect(readCatalogCache("http://other.com/v1", dir)).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
@@ -93,8 +93,8 @@ describe("readCatalogCache", () => {
 	it("returns the cached models when apiRoot matches", () => {
 		const dir = mkdtempSync(join(tmpdir(), "freellmapi-cache-test-"));
 		try {
-			writeCatalogCache("http://example.com/v1", sampleModels, dir);
-			const result = readCatalogCache("http://example.com/v1", dir);
+			writeCatalogCache("http://127.0.0.1:31415/v1", sampleModels, dir);
+			const result = readCatalogCache("http://127.0.0.1:31415/v1", dir);
 			expect(result).toEqual(sampleModels);
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
@@ -110,7 +110,7 @@ describe("readCatalogCache", () => {
 				"not-json{",
 				"utf8",
 			);
-			expect(readCatalogCache("http://example.com/v1", dir)).toBeUndefined();
+			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}
@@ -122,10 +122,10 @@ describe("readCatalogCache", () => {
 			mkdirSync(join(dir, "cache"), { recursive: true });
 			writeFileSync(
 				join(dir, "cache", "freellmapi-models.json"),
-				JSON.stringify({ apiRoot: "http://example.com/v1" }),
+				JSON.stringify({ apiRoot: "http://127.0.0.1:31415/v1" }),
 				"utf8",
 			);
-			expect(readCatalogCache("http://example.com/v1", dir)).toBeUndefined();
+			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}
@@ -138,12 +138,12 @@ describe("readCatalogCache", () => {
 			writeFileSync(
 				join(dir, "cache", "freellmapi-models.json"),
 				JSON.stringify({
-					apiRoot: "http://example.com/v1",
+					apiRoot: "http://127.0.0.1:31415/v1",
 					models: [{ id: "bad", contextWindow: 0 }],
 				}),
 				"utf8",
 			);
-			expect(readCatalogCache("http://example.com/v1", dir)).toBeUndefined();
+			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}

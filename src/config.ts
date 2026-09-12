@@ -4,7 +4,7 @@ import {
 } from "./auth.ts";
 
 export const PROVIDER_ID = "freellmapi";
-export const DEFAULT_BASE_URL = "http://127.0.0.1:3001/v1";
+export const DEFAULT_BASE_URL = "http://127.0.0.1:31415/v1";
 export const DEFAULT_MAX_TOKENS = 8192;
 export const API_KEY_ENV_VAR = "FREELLMAPI_API_KEY";
 export const BASE_URL_ENV_VAR = "FREELLMAPI_BASE_URL";
