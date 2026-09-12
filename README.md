@@ -26,7 +26,8 @@ pi
  - enter API_KEY 
 ]
 [/model] or [/scoped-models]
-[ Select any freellmapi/<model>] /** best with router: <auto>, < auto:<chain-name> > **/
+[ Select any freellmapi/<model>]
+<!-- models router: <auto> < auto:<chain-name> --!>
 --
 ```
 
@@ -42,3 +43,5 @@ pi
 
 _**hat-to Tashfeen**_
 [FreellmAPI Documentation](https://github.com/tashfeenahmed/freellmapi)
+
+
