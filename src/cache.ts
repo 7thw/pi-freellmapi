@@ -2,6 +2,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { FreeLlmApiModel } from "./catalog.ts";
+import { parseModelArray } from "./catalog.ts";
 
 const CACHE_FILE_NAME = "freellmapi-models.json";
 
@@ -43,36 +44,14 @@ export function writeCatalogCache(
 	}
 }
 
-function parseCachedModels(values: unknown[]): FreeLlmApiModel[] | undefined {
-	const models: FreeLlmApiModel[] = [];
-	const seen = new Set<string>();
-	for (const raw of values) {
-		if (!isRecord(raw)) continue;
-		const id = typeof raw.id === "string" ? raw.id.trim() : "";
-		const contextWindow = positiveFiniteNumber(raw.contextWindow);
-		if (!id || seen.has(id) || contextWindow === undefined) continue;
-		if (raw.available !== true) continue;
-		const name =
-			typeof raw.name === "string" && raw.name.trim() ? raw.name.trim() : id;
-		const supportedParameters = Array.isArray(raw.supportedParameters)
-			? raw.supportedParameters.filter(
-					(value): value is string => typeof value === "string",
-				)
-			: [];
-		seen.add(id);
-		models.push({
-			id,
-			name,
-			ownedBy: typeof raw.ownedBy === "string" ? raw.ownedBy : undefined,
-			contextWindow,
-			available: true,
-			supportedParameters,
-		});
-	}
+export function parseCachedModels(
+	values: unknown[],
+): FreeLlmApiModel[] | undefined {
+	const models = parseModelArray(values);
 	return models.length > 0 ? models : undefined;
 }
 
-function positiveFiniteNumber(value: unknown): number | undefined {
+function _positiveFiniteNumber(value: unknown): number | undefined {
 	return typeof value === "number" && Number.isFinite(value) && value > 0
 		? value
 		: undefined;

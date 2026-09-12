@@ -1,6 +1,4 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { PROVIDER_KEY } from "./src/auth-storage.ts";
-import { loadDotenvFromExtensionDir } from "./src/dotenv.ts";
 import { loadStoredCredential, PROVIDER_ID } from "./src/auth.ts";
 import { readCatalogCache, writeCatalogCache } from "./src/cache.ts";
 import { type FreeLlmApiModel, fetchCatalog } from "./src/catalog.ts";

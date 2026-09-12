@@ -32,7 +32,7 @@ pi
 
 **_Base Url_**
 
-- Default: `http://127.0.0.1:3001/v1` *
+- Default: `http://127.0.0.1:31415/v1` *
 - Chat: `/v1/chat/completions`
 - Responses: `/v1/responses`
 - Messages: `/v1/messages` (Anthropic-compatible (Claude))

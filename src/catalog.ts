@@ -15,38 +15,35 @@ export interface FetchCatalogOptions {
 	fetchFn?: typeof fetch;
 }
 
-/** Parse and filter an OpenAI-compatible /models response. */
-export function parseCatalogResponse(payload: unknown): FreeLlmApiModel[] {
-	if (!isRecord(payload) || !Array.isArray(payload.data)) {
-		throw new Error(
-			"FreeLLMAPI /models response does not contain a data array",
-		);
-	}
-
+export function parseModelArray(rawModelArray: unknown[]): FreeLlmApiModel[] {
 	const models: FreeLlmApiModel[] = [];
 	const seen = new Set<string>();
-	for (const raw of payload.data) {
+	for (const raw of rawModelArray) {
 		if (!isRecord(raw)) continue;
 		const id = typeof raw.id === "string" ? raw.id.trim() : "";
-		if (!id || seen.has(id) || raw.available !== true) continue;
-
 		const contextWindow =
+			positiveFiniteNumber(raw.contextWindow) ??
 			positiveFiniteNumber(raw.context_window) ??
 			positiveFiniteNumber(raw.context_length);
-		if (contextWindow === undefined) continue;
-
+		if (!id || seen.has(id) || contextWindow === undefined) continue;
+		if (raw.available !== true) continue;
 		const name =
 			typeof raw.name === "string" && raw.name.trim() ? raw.name.trim() : id;
 		const ownedBy =
-			typeof raw.owned_by === "string" && raw.owned_by.trim()
-				? raw.owned_by.trim()
-				: undefined;
-		const supportedParameters = Array.isArray(raw.supported_parameters)
-			? raw.supported_parameters.filter(
+			typeof raw.ownedBy === "string" && raw.ownedBy.trim()
+				? raw.ownedBy.trim()
+				: typeof raw.owned_by === "string" && raw.owned_by.trim()
+					? raw.owned_by.trim()
+					: undefined;
+		const supportedParameters = Array.isArray(raw.supportedParameters)
+			? raw.supportedParameters.filter(
 					(value): value is string => typeof value === "string",
 				)
-			: [];
-
+			: Array.isArray(raw.supported_parameters)
+				? raw.supported_parameters.filter(
+						(value): value is string => typeof value === "string",
+					)
+				: [];
 		seen.add(id);
 		models.push({
 			id,
@@ -58,6 +55,15 @@ export function parseCatalogResponse(payload: unknown): FreeLlmApiModel[] {
 		});
 	}
 	return models;
+}
+/** Parse and filter an OpenAI-compatible /models response. */
+export function parseCatalogResponse(payload: unknown): FreeLlmApiModel[] {
+	if (!isRecord(payload) || !Array.isArray(payload.data)) {
+		throw new Error(
+			"FreeLLMAPI /models response does not contain a data array",
+		);
+	}
+	return parseModelArray(payload.data);
 }
 
 export async function fetchCatalog(

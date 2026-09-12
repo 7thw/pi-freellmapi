@@ -150,7 +150,7 @@ describe("createLoginFreeLlmApi", () => {
 		await login(callbacks);
 
 		expect(register).toHaveBeenCalledWith(
-			"http://127.0.0.1:31415/v1",
+			"http://example.com/v1",
 			"key",
 			sampleModels,
 		);

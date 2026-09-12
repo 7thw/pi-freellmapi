@@ -74,7 +74,9 @@ describe("readCatalogCache", () => {
 	it("returns undefined when the cache file does not exist", () => {
 		const dir = mkdtempSync(join(tmpdir(), "freellmapi-cache-test-"));
 		try {
-			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
+			expect(
+				readCatalogCache("http://127.0.0.1:31415/v1", dir),
+			).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}
@@ -110,7 +112,9 @@ describe("readCatalogCache", () => {
 				"not-json{",
 				"utf8",
 			);
-			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
+			expect(
+				readCatalogCache("http://127.0.0.1:31415/v1", dir),
+			).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}
@@ -125,7 +129,9 @@ describe("readCatalogCache", () => {
 				JSON.stringify({ apiRoot: "http://127.0.0.1:31415/v1" }),
 				"utf8",
 			);
-			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
+			expect(
+				readCatalogCache("http://127.0.0.1:31415/v1", dir),
+			).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}
@@ -143,7 +149,9 @@ describe("readCatalogCache", () => {
 				}),
 				"utf8",
 			);
-			expect(readCatalogCache("http://127.0.0.1:31415/v1", dir)).toBeUndefined();
+			expect(
+				readCatalogCache("http://127.0.0.1:31415/v1", dir),
+			).toBeUndefined();
 		} finally {
 			rmSync(dir, { recursive: true, force: true });
 		}

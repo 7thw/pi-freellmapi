@@ -1,8 +1,12 @@
-import { describe, expect, it } from "vitest";
-import { loadStoredCredential, PROVIDER_ID, _setAuthPathForTesting } from "../src/auth.ts";
-import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { describe, expect, it } from "vitest";
+import {
+	_setAuthPathForTesting,
+	loadStoredCredential,
+	PROVIDER_ID,
+} from "../src/auth.ts";
 
 describe("loadStoredCredential", () => {
 	it("returns undefined when the auth file does not exist", () => {

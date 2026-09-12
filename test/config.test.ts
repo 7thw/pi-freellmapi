@@ -1,4 +1,9 @@
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
 import { describe, expect, it } from "vitest";
+import { _setAuthPathForTesting } from "../src/auth.ts";
 import {
 	API_KEY_ENV_VAR,
 	BASE_URL_ENV_VAR,
@@ -106,7 +111,15 @@ describe("loadConfig", () => {
 
 describe("resolveConfiguredApiKey", () => {
 	it("returns undefined when nothing is configured", () => {
-		expect(resolveConfiguredApiKey({}, undefined)).toBeUndefined();
+		const dir = mkdtempSync(join(tmpdir(), "freellmapi-config-test-"));
+		try {
+			// Override the auth path for this test
+			_setAuthPathForTesting(join(dir, "auth.json"));
+			expect(resolveConfiguredApiKey({}, undefined)).toBeUndefined();
+			_setAuthPathForTesting(undefined);
+		} finally {
+			rmSync(dir, { recursive: true, force: true });
+		}
 	});
 
 	it("prefers the environment key", () => {
@@ -142,7 +155,7 @@ describe("resolveConfiguredApiKey", () => {
 
 describe("constants", () => {
 	it("exports the expected constant values", () => {
-		expect(DEFAULT_BASE_URL).toBe("http://127.0.0.1:3001/v1");
+		expect(DEFAULT_BASE_URL).toBe("http://127.0.0.1:31415/v1");
 		expect(DEFAULT_MAX_TOKENS).toBe(8192);
 		expect(API_KEY_ENV_VAR).toBe("FREELLMAPI_API_KEY");
 		expect(BASE_URL_ENV_VAR).toBe("FREELLMAPI_BASE_URL");
