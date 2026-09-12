@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
-import type { FreeLlmApiModel } from "./catalog.js";
+import type { FreeLlmApiModel } from "./catalog.ts";
 
 const CACHE_FILE_NAME = "freellmapi-models.json";
 

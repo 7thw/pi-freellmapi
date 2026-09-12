@@ -1,4 +1,4 @@
-import { normalizeBaseUrl } from "./config.js";
+import { normalizeBaseUrl } from "./config.ts";
 
 export interface FreeLlmApiModel {
 	id: string;

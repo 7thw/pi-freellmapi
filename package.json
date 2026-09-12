@@ -1,60 +1,33 @@
 {
 	"name": "pi-freellmapi",
-	"version": "0.1.3",
+	"version": "0.1.5",
 	"type": "module",
-	"description": "Pi extension for discovering models from a FreeLLMAPI gateway",
-	"main": "./dist/index.js",
-	"module": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"exports": {
-		".": {
-			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
-		}
-	},
+	"description": "Pi Agent extension for discovering models from a FreeLLMAPI",
 	"license": "MIT",
-	"author": "7thw",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/7thw/pi-freellmapi.git"
-	},
-	"bugs": {
-		"url": "https://github.com/7thw/pi-freellmapi/issues"
-	},
-	"homepage": "https://github.com/7thw/pi-freellmapi#readme",
 	"keywords": [
 		"pi-package",
 		"pi-extension",
 		"freellmapi",
-		"openai-compatible",
-		"llm",
-		"ai",
-		"model-provider"
+		"openai-compatible"
 	],
 	"engines": {
 		"node": ">=22"
 	},
 	"files": [
-		"dist",
+		"index.ts",
+		"src",
 		"README.md",
 		"LICENSE"
 	],
-	"bin": {
-		"pi-freellmapi": "dist/bin/pi-freellmapi.js"
-	},
 	"scripts": {
-		"build": "tsc -p tsconfig.build.json",
 		"typecheck": "tsc --noEmit",
 		"test": "vitest run",
-		"format": "biome check --write *.ts *.json src test bin",
-		"check": "biome check *.ts *.json src test bin && tsc --noEmit && vitest run",
-		"cli": "tsx bin/pi-freellmapi.ts",
-		"cli:check": "tsx bin/pi-freellmapi.ts --help",
-		"prepare": "npm run build"
+		"format": "biome check --write *.ts *.json src test",
+		"check": "biome check *.ts *.json src test && tsc --noEmit && vitest run"
 	},
 	"pi": {
 		"extensions": [
-			"./dist/index.js"
+			"./index.ts"
 		]
 	},
 	"peerDependencies": {
@@ -62,16 +35,11 @@
 		"@earendil-works/pi-coding-agent": "*"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"@earendil-works/pi-ai": "^0.85.1",
-		"@earendil-works/pi-coding-agent": "^0.85.1",
-		"@types/node": "^22.10.5",
-		"tsx": "^4.19.2",
-		"typescript": "^5.9.3",
-		"vite": "^5.4.21",
-		"vitest": "^2.1.9"
-	},
-	"dependencies": {
-		"pi-freellmapi": "file:pi-freellmapi-0.1.2.tgz"
+		"@biomejs/biome": "latest",
+		"@earendil-works/pi-ai": "^0.80.9",
+		"@earendil-works/pi-coding-agent": "^0.80.9",
+		"@types/node": "latest",
+		"typescript": "latest",
+		"vitest": "latest"
 	}
 }

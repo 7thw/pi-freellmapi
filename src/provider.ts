@@ -2,8 +2,8 @@ import type {
 	ProviderConfig,
 	ProviderModelConfig,
 } from "@earendil-works/pi-coding-agent";
-import type { FreeLlmApiModel } from "./catalog.js";
-import type { FreeLlmApiConfig } from "./config.js";
+import type { FreeLlmApiModel } from "./catalog.ts";
+import type { FreeLlmApiConfig } from "./config.ts";
 
 export function toProviderConfig(
 	config: FreeLlmApiConfig,
@@ -21,7 +21,7 @@ export function toProviderConfig(
 		...(environmentApiKey
 			? {
 					authHeader: false,
-					headers: { Authorization: "******" },
+					headers: { Authorization: `Bearer ${environmentApiKey}` },
 				}
 			: { authHeader: true }),
 		models: models

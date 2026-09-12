@@ -2,8 +2,8 @@ import type {
 	OAuthCredentials,
 	OAuthLoginCallbacks,
 } from "@earendil-works/pi-ai";
-import { type FreeLlmApiModel, fetchCatalog } from "./catalog.js";
-import { normalizeBaseUrl } from "./config.js";
+import { type FreeLlmApiModel, fetchCatalog } from "./catalog.ts";
+import { normalizeBaseUrl } from "./config.ts";
 
 export type RegisterLoginCatalog = (
 	baseUrl: string,
@@ -25,16 +25,15 @@ export function createLoginFreeLlmApi(
 	): Promise<OAuthCredentials> {
 		const enteredBaseUrl = await callbacks.onPrompt({
 			message: "FreeLLMAPI base URL",
-			placeholder: "http://127.0.0.1:31415/v1",
+			placeholder: "http://127.0.0.1:3001/v1",
 		});
 		const baseUrl = normalizeBaseUrl(enteredBaseUrl);
 		const apiKey = (
 			await callbacks.onPrompt({
-				message:
-					"FreeLLMAPI unified API key (leave empty for a keyless server)",
-				allowEmpty: true,
+				message: "FreeLLMAPI unified API key",
 			})
 		).trim();
+		if (!apiKey) throw new Error("FreeLLMAPI API key is required");
 
 		callbacks.onProgress?.("Fetching FreeLLMAPI model catalog...");
 		let models: FreeLlmApiModel[];
